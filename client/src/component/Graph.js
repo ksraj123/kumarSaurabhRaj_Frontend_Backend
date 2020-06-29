@@ -1,55 +1,41 @@
-import React, { Component } from 'react';
+import React from 'react';
 import CanvasJSReact from '../assets/canvasjs.react';
-var CanvasJSChart = CanvasJSReact.CanvasJSChart;
+const CanvasJSChart = CanvasJSReact.CanvasJSChart;
  
-class SplineChart extends Component {
-	render() {
-		const options = {
+const Graph = (props)=>{
+	const options = {
+		animationEnabled: true,
+		title:{
+			text: "Height and Time Plot"
+		},
+		zoomEnabled: true,
+		toolTip:{
+			enabled: true,
 			animationEnabled: true,
-			title:{
-				text: "Height and Time Plot"
-			},
-            toolTip:{
-              enabled: true,
-              animationEnabled: true,
-              content:"H: {y}, T: {x}"
-            },
-			axisX: {
-                title: "Time (T)",
-                stripLines:[
-                    {                
-                        startValue:5,
-                        endValue:10,                
-                        color:"#d8d8d8"                      
-                    }
-                ],
-                gridDashType: "longDash",
-                // gridDashType: "dot",
-			    gridThickness: 1
-			},
-			axisY: {
-				title: "Height (H)",
-                suffix: "m",
-                gridDashType: "longDash",
-				includeZero: true
-			},
-			data: [{
-				yValueFormatString: "###",
-				xValueFormatString: "###",
-				type: "spline",
-				dataPoints: this.props.dataPoints
-			}]
-		}
-		
-		return (
-		<div>
-			<CanvasJSChart options = {options} 
-				/* onRef={ref => this.chart = ref} */
-			/>
-			{/*You can get reference to the chart instance as shown above using onRef. This allows you to access all chart properties and methods*/}
-		</div>
-		);
+			content:"H: {y}, T: {x}"
+		},
+		axisX: {
+			title: "Time (T)",
+			gridDashType: "longDash",
+			gridThickness: 1
+		},
+		axisY: {
+			title: "Height (H)",
+			suffix: "m",
+			gridDashType: "longDash",
+			includeZero: true
+		},
+		data: [{
+			yValueFormatString: "###",
+			xValueFormatString: "###",
+			type: "spline",
+			dataPoints: props.dataPoints
+		}]
 	}
+	
+	return (
+		<CanvasJSChart options = {options} />
+	);
 }
 
-export default SplineChart;                           
+export default Graph;                           

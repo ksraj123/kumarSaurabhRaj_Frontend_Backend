@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import Slider from '../component/Slider/Slider'
 import Graph from '../component/Graph';
+import HeightInput from '../component/HeightInput';
 import Spinner from '../component/Spinner/Spinner';
 
 class PlotGraph extends React.Component{
@@ -13,7 +14,7 @@ class PlotGraph extends React.Component{
         coff: 0.9
     }
 
-    onSliderChange(result){
+    onSliderChange = (result) => {
         console.log(result);
         this.setState({
             showSpinner: true,
@@ -23,16 +24,25 @@ class PlotGraph extends React.Component{
         })
     }
 
+    setHeight = (event) => {
+        event.preventDefault();
+        console.log(event.target.height.value);
+        this.setState({
+            showSpinner: true,
+            height: event.target.height.value
+        }, this.getDataFromAPI)
+    }
+
     render(){
         return(
             <React.Fragment>
             {this.state.showSpinner && <Spinner />}
             <div className="PlotGraph">
-                <div>Input field to set h</div>
+                <HeightInput val={this.state.height} setHeight={this.setHeight}/>
                 <Graph dataPoints={this.state.datapoints}/>
                 <Slider
                     val={this.state.coff} 
-                    onChange={this.onSliderChange.bind(this)} 
+                    onChange={this.onSliderChange} 
                 />
             </div>
             </React.Fragment>
