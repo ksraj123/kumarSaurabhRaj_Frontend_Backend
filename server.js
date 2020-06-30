@@ -1,10 +1,15 @@
 const express = require('express');
+const util = require('util');
 const cors = require('cors')
 var fs = require('fs');
+const readFileAsync = util.promisify(fs.readFile);
 const app = express();
 const port = 8000;
 const gravity = 9.8;
-let results = [];
+let results = {
+    pages: 1,
+    requests: []
+};
 
 app.use(express.static('./client/build'));
 app.use(express.json());
@@ -14,16 +19,32 @@ app.get('/', (req, res)=>{
     res.sendFile('./client/build/index.html');
 })
 
-app.get('/api/history', (req, res)=>{
-    results = results.slice(-10);
-    let resSned = [...results];
-    resSned.reverse();
-    res.json({
-        results: resSned
-    })
+const readFile = async () => {
+    try {
+        const data = await readFileAsync('data.json');
+        results = JSON.parse(data.toString());
+    } catch(err){
+        if (err.code === 'ENOENT'){
+            fs.writeFile("data.json", JSON.stringify(results), err => { 
+                if (err) console.log(err);
+            });
+            readFile();
+        } else {
+            console.log(err);
+            return;
+        }
+    }
+}
+
+app.get('/api/history', async (req, res)=>{
+    await readFile();
+    res.json(results);
 })
 
-app.post('/api/data', (req, res)=>{
+app.post('/api/data', async (req, res)=>{
+    try{
+
+    
     const height = parseInt(req.body.height);
     const coff = parseFloat(req.body.coff);
     const result = [];
@@ -35,14 +56,22 @@ app.post('/api/data', (req, res)=>{
         totalTime += Math.pow(coff, i + 1)*(Math.sqrt(2*gravity*height)/gravity)
         result.push({x: totalTime, y: ( Math.pow(coff, 2*(i+1)) * height )});
     }
-    results.push({
+    await readFile();
+    results.requests.push({
         height,
         coff,
         result
     })
+    results.pages = Math.ceil(results.requests.length / 10);
+    fs.writeFile("data.json", JSON.stringify(results), err => { 
+        if (err) console.log(err);
+    });
     res.json({
         result: result
     });
+    } catch(err){
+        console.log(err);
+    }
 })
 
 app.listen(port, ()=>console.log(`server listening on port ${port}`));
