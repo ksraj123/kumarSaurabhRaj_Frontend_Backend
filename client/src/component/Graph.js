@@ -34,7 +34,10 @@ const Graph = (props)=>{
 	}
 	
 	return (
-		<CanvasJSChart options = {options} />
+		<React.Fragment>
+			<h3>Select a appropirate size portion of the graph to zoom it</h3>
+			<CanvasJSChart options = {options} />
+		</React.Fragment>
 	);
 }
 

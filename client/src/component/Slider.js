@@ -2,8 +2,8 @@ import React from 'react';
 import ReactSlider from 'react-slider';
 import classes from './Slider.module.css';
 
-export default (props) => <React.Fragment>
-    <p>Slide to adjsut cofficient of restitution</p>
+export default (props) => <div>
+    <p>Cofficient of Restitution (e)</p>
     <ReactSlider
     max={1}
     min={0}
@@ -15,4 +15,4 @@ export default (props) => <React.Fragment>
     thumbClassName={classes.thumb}
     trackClassName={classes.track}
     renderThumb={(props, state) => <div {...props}>{state.valueNow}</div>}
-/></React.Fragment>
+/></div>

@@ -1,12 +1,15 @@
 import React from 'react';
 import axios from 'axios';
-import Slider from '../component/Slider/Slider'
 import Graph from '../component/Graph';
+import classes from './PlotGraph.module.css';
+import Slider from '../component/Slider'
 import HeightInput from '../component/HeightInput';
-import Spinner from '../component/Spinner/Spinner';
+import Spinner from '../component/Spinner';
 
 class PlotGraph extends React.Component{
+
     serverLink="http://localhost:8000/api/data";
+
     state={
         datapoints: [],
         showSpinner: true,
@@ -37,9 +40,9 @@ class PlotGraph extends React.Component{
         return(
             <React.Fragment>
             {this.state.showSpinner && <Spinner />}
-            <div className="PlotGraph">
+            <Graph dataPoints={this.state.datapoints}/>
+            <div className={classes.Controls}>
                 <HeightInput val={this.state.height} setHeight={this.setHeight}/>
-                <Graph dataPoints={this.state.datapoints}/>
                 <Slider
                     val={this.state.coff} 
                     onChange={this.onSliderChange} 

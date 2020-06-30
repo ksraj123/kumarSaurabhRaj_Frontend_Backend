@@ -1,0 +1,7 @@
+.Controls{
+    display: flex;
+    width: 80%;
+    margin: 50px auto;
+    flex-direction: row;
+    justify-content: space-around;
+}
