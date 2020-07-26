@@ -1,8 +1,20 @@
-# Physics Graph Plot
+# Newtwon Physics Plot
 
 - Author: Kumar Saurabh Raj
 
 - Technologies used: React, NodeJs, Express
+
+## About
+
+- Aims to help pre-university students get a better grasp on classical physics by helping them visualise different graphs dependent upon qunatities which could changed dynamically.
+
+## Features
+
+- Collision Plotter
+  - A body is dropped from from a certain height(**H**) on a surface with cofficient of restitution(**e**)
+  - Displacement time graph for the body can be plotted for initial and subsequent collisions with the surface
+  - **H** and **e** can be adjusted using sliders, the graph plotted with automatically update when values are adjusted
+  - The graph can be zoomed to enlarge a selected section and moved to view other sections, please go through the demos.
 
 ## Demo
 
