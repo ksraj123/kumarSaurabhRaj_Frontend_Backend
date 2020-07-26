@@ -1,4 +1,4 @@
-# Newtwon Physics Plot
+# Newton Physics Plotter
 
 - Author: Kumar Saurabh Raj
 
